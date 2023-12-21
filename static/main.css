@@ -1,0 +1,195 @@
+@font-face {
+   font-family: 'osn'; 
+   src: url('RubikBubbles-Regular.ttf') format('woff2'); 
+   font-weight: normal;
+   font-style: normal;
+}
+@font-face {
+   font-family: 'osn2'; 
+   src: url('Oswald-VariableFont_wght.ttf') format('woff2'); 
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'osn3'; 
+   src: url('RobotoMono-VariableFont_wght.ttf') format('woff2'); 
+   font-weight: normal;
+   font-style: normal;
+}
+
+body {
+   background-color: #444444;
+   color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+
+header {
+   font-family: 'osn', Arial, Helvetica, sans-serif;
+   background: linear-gradient(rgb(44, 42, 42), black);
+   background-color: rgb(44, 42, 42);
+   color: rgb(151, 226, 151);
+   padding: 20px; font-size: 16pt;
+}
+
+.xd:hover {
+   background: rgba(196, 196, 196, 0.199);
+}
+
+.xd:active {
+   font-size: 25px;
+   font-weight: bold;
+   color: white;
+}
+
+footer {
+   font-family: 'osn2', Arial, Helvetica, sans-serif;
+   padding: 25px;
+   text-align: right;
+   font-style: italic;
+   padding: 25px;
+   text-align: right;
+   font-style: italic;
+   position: fixed;
+   bottom: 0px;
+   left: 0;
+   right: 0;
+}
+
+main {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   margin-left: 15px;
+}
+
+a {
+   font-family: 'osn2', Arial, Helvetica, sans-serif;
+   color: bisque;
+   font-size: 15px;
+   font-style: italic;
+   text-decoration: none;
+}
+
+a:active {
+   color: aliceblue;
+}
+
+a:hover {
+   font-weight: bolder;
+   text-shadow: rgb(235, 227, 227) 0px 0px 10px ;
+}
+
+h1 {
+   
+   font-family: 'osn', Arial, Helvetica, sans-serif;
+   text-align: center;
+}
+
+h2 {
+   font-family: 'osn', Arial, Helvetica, sans-serif;
+   text-align: center;
+   font-weight: 100;
+}
+
+img {
+   display: flex;
+   margin: auto;
+   margin-top: 20px;
+   height: 500px;
+   width: 700px;
+}
+
+.p {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   display: flex;
+   margin: auto;
+   text-align: center;
+   padding-top: 15px;
+   width: 900px;
+
+}
+
+.error {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   color: rgb(182, 45, 45);
+   font-size: 13px;
+   font-weight: bolder;
+}
+
+form {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   margin: auto; 
+   text-align: center;
+   padding-top: 15px;
+   width: 900px;
+}
+
+button {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   font-size: 15px;
+   color: whitesmoke;
+   margin-top: 17px;
+   width: 180px;
+   height: 35px;
+   background-color: rgb(71, 71, 71);
+   border-radius: 15px; 
+}
+button:active {
+   color: rgb(255, 253, 253);
+   background-color: rgb(94, 93, 93);
+}
+
+
+
+input {
+   font-family: 'osn3', Arial, Helvetica, sans-serif;
+   text-align: center;
+   color: white;
+   background-color: rgb(24, 24, 24);
+   width: 100%;
+   padding: 12px 20px;
+   margin: 8px 0;
+   display: inline-block;
+   border: 2px solid #8d138b;
+   box-sizing: border-box;
+   border-radius: 5px;
+}
+
+/* Стили для кнопки */
+input[type="submit"] {
+   background-color: #1ddd24;
+   color: white;
+   padding: 14px 20px;
+   margin: 8px 0;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+input[type="submit"]:hover {
+   background-color: #45a049;
+}
+
+p {
+   text-align: center;
+}
+
+.weeks-container {
+   display: flex;
+   width: 1000px;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 10px;
+}
+
+.week {
+   color: #1ddd24;
+   width: 130px;
+   background-color: rgb(59, 58, 58);
+   padding: 10px;
+   border-radius: 5px;
+   margin: 5px;}
+
+.zxc {
+   margin-bottom: 100px;
+}

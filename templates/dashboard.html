@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block lab %} РГЗ {% endblock %}
+
+{% block main %}
+   <h2>Dashboard</h2>
+    <div id="calendar"></div>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <div id="calendar"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // ... (ваш предыдущий код)
+
+            // Обработка клика по ячейке календаря
+            $('#calendar').on('click', '.vacation-cell', function() {
+                const startDate = $(this).data('start');
+                const endDate = $(this).data('end');
+
+                // Проверка доступности недель
+                $.ajax({
+                    type: 'GET',
+                    url: `/get_vacation_status?start_date=${startDate}&end_date=${endDate}`,
+                    success: function(response) {
+                        if (response.success) {
+                            // Отправка AJAX запроса для обновления отпуска
+                            $.ajax({
+                                type: 'POST',
+                                url: '/update_vacation',
+                                contentType: 'application/json;charset=UTF-8',
+                                data: JSON.stringify({ start_date: startDate, end_date: endDate }),
+                                success: function(response) {
+                                    if (response.success) {
+                                        // Обновление отпусков на календаре
+                                        console.log('Vacation updated successfully');
+                                    } else {
+                                        console.log(response.message);
+                                    }
+                                }
+                            });
+                        } else {
+                            console.log(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+

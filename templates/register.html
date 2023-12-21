@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block lab %}РГЗ{% endblock %}
+
+{% block main %}
+
+    <h2>Регистрация</h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <form action="" method="post">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Уже зарегистрированы? <a href="{{ url_for('loginPage') }}">Авторизоваться</a></p>
+
+
+{% endblock %}

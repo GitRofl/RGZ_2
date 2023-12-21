@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Басман Артём. {% block  lab %} {% endblock %} </title>
+   <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+</head>
+<body>
+   <header>
+      WEB-программирование, 2 часть. {{ self.lab() }}
+   </header>
+
+   <main>
+      {% block main %}{% endblock %}
+   </main>
+   
+   <footer>
+      &copy; Басман Артём, ФБИ-12, 3 курс, 2023
+   </footer>
+</body>
+</html> 

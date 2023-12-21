@@ -1,0 +1,12 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block lab %} РГЗ {% endblock %}
+
+{% block main %}
+    <h1>Welcome to My Flask App!</h1>
+    <p>This is the home page of my Flask application.</p>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('register') }}">Register</a>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %} РГЗ {% endblock %}
+
+{% block main %}
+    <h2>Авторизация</h2>
+    <form action="" method="post">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Авторизироваться</button>
+    </form>
+    <p>Нет аккаунта? <a href="{{ url_for('registerPage') }}">Зарегистрировать</a></p>
+
+{% endblock %}
