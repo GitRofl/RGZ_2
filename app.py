@@ -76,7 +76,7 @@ def main():
 
         print("Weeks Status:", weeks_status)
 
-        return render_template("vacation_planning.html", username=visible_user, weeks=weeks, weeks_status=weeks_status)
+        return render_template("index.html", username=visible_user, weeks=weeks, weeks_status=weeks_status)
     else:
         return redirect("/login")
 
@@ -266,7 +266,7 @@ def vacation_status():
     dbClose(cur, conn)
 
     weeks = get_weeks(current_year)
-    return render_template("vacation_planning.html", username=session["username"], weeks=weeks, weeks_status=weeks_status)
+    return render_template("index.html", username=session["username"], weeks=weeks, weeks_status=weeks_status)
 
 
 @app.route("/logout")

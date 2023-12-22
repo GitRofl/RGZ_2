@@ -1,12 +1,31 @@
-<!-- templates/index.html -->
 {% extends "base.html" %}
 
 {% block lab %} РГЗ {% endblock %}
 
 {% block main %}
-    <h1>Welcome to My Flask App!</h1>
-    <p>This is the home page of my Flask application.</p>
-    <a href="{{ url_for('login') }}">Login</a>
-    <a href="{{ url_for('register') }}">Register</a>
 
-{% endblock %}
+        <h1>Добро пожаловать, {{ username }}!</h1>
+
+        <form action="/vacation_schedule" method="post">
+            <h2>Выберите 4 недели для отпуска:</h2>
+            
+            <div class="weeks-container">
+               {% for week in weeks %}
+               {% set status = weeks_status[week] if weeks_status is defined else 'Свободно' %}
+               <div class="week">
+                   <label>
+                       <input type="checkbox" name="selected_weeks" value="{{ week }}" {% if status != "Свободно" %}disabled{% endif %}>
+                       Неделя {{ week }}: {{ status }}
+                   </label><br>
+               </div>
+           {% endfor %}
+           </div>
+       
+           <br>
+           <div class="zxc">
+           <button type="submit">Выбрать</button>
+           <a href="{{ url_for('logout') }}" class="btn btn-secondary">Выйти из аккаунта</a>
+         </div>
+       </form>
+
+    {% endblock %}
