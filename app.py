@@ -15,16 +15,26 @@ password="123"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
 
+
 def calculate_start_date(year, week_number):
     # Функция для расчета даты начала заданной недели в году
     start_date = datetime.strptime(f'{year}-W{week_number}-1', "%Y-W%W-%w")
     return start_date.date()
+
 
 def calculate_end_date(year, week_number):
     # Функция для расчета даты окончания заданной недели в году
     start_date = calculate_start_date(year, week_number)
     end_date = start_date + timedelta(days=6)
     return end_date
+ 
+ 
+def get_weeks(year):
+   # Функция для получения списка недель в заданном году
+   start_date = datetime(year, 1, 1)
+   weeks = [(start_date + timedelta(days=7 * i)).isocalendar()[1] for i in range(52)]
+   return weeks
+
  
 def dbConnect():
    conn = psycopg2.connect(
@@ -34,9 +44,11 @@ def dbConnect():
       password = "123")
    return conn;
 
+
 def dbClose (cursor, connecttion):
    cursor.close()
    connecttion.close()
+
 
 def get_username_by_id(user_id):
     conn = dbConnect()
@@ -50,11 +62,7 @@ def get_username_by_id(user_id):
     return result[0] if result else None
 
 
-def get_weeks(year):
-   # Функция для получения списка недель в заданном году
-   start_date = datetime(year, 1, 1)
-   weeks = [(start_date + timedelta(days=7 * i)).isocalendar()[1] for i in range(52)]
-   return weeks
+
 
 @app.route("/")
 def main():
@@ -64,11 +72,9 @@ def main():
         current_year = datetime.now().year
         weeks = get_weeks(current_year)
 
-        # Получение данных об отпусках пользователя из базы данных
-        # (вам нужно изменить схему вашей базы данных соответственно)
         weeks_status = get_weeks_status(current_year, session.get("id"))
 
-        print("Weeks Status:", weeks_status)  # Выводим статус недель в консоль для отладки
+        print("Weeks Status:", weeks_status)
 
         return render_template("vacation_planning.html", username=visible_user, weeks=weeks, weeks_status=weeks_status)
     else:
@@ -184,25 +190,21 @@ def loginPage():
         errors.append("Неправильный логин или пароль")
         return render_template("login.html", errors=errors, username = visibleUser)
     
+    
 @app.route('/vacation_schedule', methods=["POST"])
 def vacation_schedule():
-    # Обработка запросов на планирование отпусков
+   
     if not session.get("username"):
-        # Перенаправление на страницу входа, если пользователь не аутентифицирован
         return redirect("/login")
 
-    # Получение данных пользователя из формы
     selected_weeks = request.form.getlist("selected_weeks")
 
-    # Проверка, что пользователь выбрал ровно 4 недели
     if len(selected_weeks) != 4:
         flash("Пожалуйста, выберите ровно 4 недели для отпуска", "error")
         return redirect("/")
 
-    # Получение пользователя из сессии
     user_id = session.get("id")
 
-    # Сохранение графика отпусков пользователя в базе данных
     conn = dbConnect()
     cur = conn.cursor()
     
@@ -216,19 +218,17 @@ def vacation_schedule():
             query = "INSERT INTO vacation (user_id, start_date, end_date) VALUES (%s, %s, %s);"
             data = (user_id, start_date, end_date)
 
-            print("Executing query:", cur.mogrify(query, data))  # Вывод запроса в консоль
+            print("Executing query:", cur.mogrify(query, data))
             cur.execute(query, data)
 
         flash("График отпусков успешно сохранен", "success")
         return redirect(url_for('main')) 
 
     except Exception as e:
-        # В случае ошибки выводим сообщение в консоль
         print("Error during vacation scheduling:", str(e))
         flash("Произошла ошибка при сохранении графика отпусков", "error")
         return redirect("/")
     finally:
-        # Важно закрыть соединение в блоке finally, чтобы избежать утечек ресурсов
         dbClose(cur, conn)
 
 
