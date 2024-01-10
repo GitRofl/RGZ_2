@@ -1,19 +1,9 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import redirect, render_template, request, session, Flask, flash, url_for
-import psycopg2
+import pymysql
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-
-app.secret_key = "123"
-user_db = "artem_knowledge_base"
-host_ip = "127.0.0.1"
-host_port = "5432"
-database_name = "RGZ_WEB"
-password="123"
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
 
 
 def calculate_start_date(year, week_number):
@@ -37,17 +27,19 @@ def get_weeks(year):
 
  
 def dbConnect():
-   conn = psycopg2.connect(
-      host = "127.0.0.1",
-      database = "RGZ_WEB",
-      user = "artem_knowledge_base",
-      password = "123")
-   return conn;
+   conn = pymysql.connect(
+      host="127.0.0.1",
+      user="artem_knowledge_base",
+      password="123",
+      database="RGZ_WEB",
+      charset="utf8mb4",
+      cursorclass=pymysql.cursors.DictCursor
+   )
+   return conn
 
-
-def dbClose (cursor, connecttion):
+def dbClose(cursor, connection):
    cursor.close()
-   connecttion.close()
+   connection.close()
 
 
 def get_username_by_id(user_id):
@@ -193,7 +185,6 @@ def loginPage():
     
 @app.route('/vacation_schedule', methods=["POST"])
 def vacation_schedule():
-   
     if not session.get("username"):
         return redirect("/login")
 
@@ -207,22 +198,21 @@ def vacation_schedule():
 
     conn = dbConnect()
     cur = conn.cursor()
-    
+
     current_year = datetime.now().year
 
     try:
         for week_number in selected_weeks:
             start_date = calculate_start_date(current_year, int(week_number))
             end_date = calculate_end_date(current_year, int(week_number))
+
             
             query = "INSERT INTO vacation (user_id, start_date, end_date) VALUES (%s, %s, %s);"
             data = (user_id, start_date, end_date)
-
-            print("Executing query:", cur.mogrify(query, data))
             cur.execute(query, data)
 
         flash("График отпусков успешно сохранен", "success")
-        return redirect(url_for('main')) 
+        return redirect(url_for('main'))
 
     except Exception as e:
         print("Error during vacation scheduling:", str(e))
