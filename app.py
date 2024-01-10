@@ -5,7 +5,21 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
+def dbConnect():
+   conn = pymysql.connect(
+      host="127.0.0.1",
+      user="artem_knowledge_base",
+      password="123",
+      database="RGZ_WEB",
+      charset="utf8mb4",
+      cursorclass=pymysql.cursors.DictCursor
+   )
+   return conn
 
+def dbClose(cursor, connection):
+   cursor.close()
+   connection.close()
+   
 def calculate_start_date(year, week_number):
     # Функция для расчета даты начала заданной недели в году
     start_date = datetime.strptime(f'{year}-W{week_number}-1', "%Y-W%W-%w")
@@ -26,20 +40,7 @@ def get_weeks(year):
    return weeks
 
  
-def dbConnect():
-   conn = pymysql.connect(
-      host="127.0.0.1",
-      user="artem_knowledge_base",
-      password="123",
-      database="RGZ_WEB",
-      charset="utf8mb4",
-      cursorclass=pymysql.cursors.DictCursor
-   )
-   return conn
 
-def dbClose(cursor, connection):
-   cursor.close()
-   connection.close()
 
 
 def get_username_by_id(user_id):
